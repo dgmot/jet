@@ -1,0 +1,45 @@
+
+<div class="oj-hybrid-padding">
+  <h1>Scientific fields</h1>
+  <div id="popupWrapperFields">
+      <oj-popup id="popup1" style="display:none"  tail="simple" modality="modal">
+          <p>This view has the purpose of demonstrating how</br>
+          a graph can be used to categorize scientific fields.</br>
+          To use it, click on any category of the graph, or move</br>
+          the mouse to the periphery of the circle for rotating it.</p>
+      </oj-popup>
+      <oj-popup id="popup2" style="display:none" tail="simple" modality="modal"
+        position.my.vertical="bottom"
+        position.at.vertical="top">
+          <p>After you clicked on a category, a tree of nodes will be</br>
+            displayed here. This allows you to go to an anterior node.
+          </p>
+      </oj-popup>
+  <div id='sunburst-container'>
+      <div class="oj-flex oj-flex-items-pad demo-flex-display">
+          <div class="oj-flex-item">
+            <div>
+              <h5 id="currentText"></h5>
+            </div>
+          </div>
+        </div>
+    <oj-sunburst
+      id="sunburst"
+        animation-on-display="auto"
+        animation-on-data-change="auto"
+        node-defaults.label-display="rotated"
+        drilling= "on"
+        on-oj-drill="[[drillListener]]"
+        data="[[sunburstData]]"
+        selection-mode="none"
+        style="max-width:1300px;width:100%; height:850px;">
+        <template slot='nodeTemplate'>
+            <oj-sunburst-node
+                label='[[$current.data.label]]'
+                color='#0a132d'
+                value='[[$current.data.value]]'>
+            </oj-sunburst-node>
+        </template>
+    </oj-sunburst>
+  </div>
+</div>

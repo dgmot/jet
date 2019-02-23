@@ -1,0 +1,74 @@
+
+<div id="tlineArea" class="oj-hybrid-padding">
+  <h1>Timeline Area</h1>
+</div>
+<div id="popupWrapper">
+  <oj-popup id="popup1" style="display:none"  tail="simple" modality="modal" 
+    on-oj-close="[[closePopup1]]" >
+      <p>This view has the purpose of demonstrating</br>
+      how two components can be combined together.</p>
+  </oj-popup>
+  <oj-popup id="popup2" style="display:none"  tail="simple" modality="modal" 
+    on-oj-close="[[closePopup2]]" position.at.horizontal="end" position.my.horizontal="end" >
+      <p>
+      This application contains a set of views.</br>
+      Each view contains a set of components.
+    </p>
+  </oj-popup>
+  <oj-popup id="popup3" style="display:none" tail="simple" modality="modal"
+    on-oj-close="[[closePopup3]]" >
+      <p>This is a timeline for the 19th century scientific</br>
+        events. To use it, simply click the timeline frame or</br>
+        the timeline overview bar and drag it to the right or left. </p>
+  </oj-popup>
+  <oj-popup id="popup4" style="display:none" tail="simple" modality="modal" >
+      <p>When you have dragged the timeline, and new events are available</br>
+      on the timeline frame, this component will be updated with the current</br>
+      timeline events, which are added over the accumulated viewed timeline events.</p>
+  </oj-popup>
+</div>
+<oj-buttonset-one 
+    id="radioButtonset" 
+    class='oj-buttonset-width-auto' 
+    aria-label="Choose only one setting." 
+    aria-controls="timeline" 
+    value="{{orientationValue}}" 
+    style="padding:25px;padding-bottom:0px;float:left;">
+    <!-- ko foreach: orientationOptions -->    
+    <oj-option value="[[id]]">
+        <span data-bind="text: label"></span>
+    </oj-option>
+    <!-- /ko -->
+</oj-buttonset-one>
+<oj-timeline 
+    id='tline' 
+    aria-label='Custom Date Formatting Demo'
+    minor-axis.scale='years'
+    minor-axis.zoom-order='["years"]'
+    start='[[new Date("Jan 1, 1799").toISOString()]]'
+    end='[[new Date("Dec 31, 1899").toISOString()]]'
+    viewport-start='[[new Date("Jan 1, 1799").toISOString()]]'
+    viewport-end='[[new Date("Jan 1, 1806").toISOString()]]'
+    selection-mode='single'
+    selection='["e4"]'
+    series='[[timelineSeries]]',
+    orientation='[[ko.toJS(orientationValue)]]'
+    overview.rendered='on',
+    overview.svg-style='{"height": "80px"}',
+    on-oj-viewport-change='[[listener]]',
+    value-formats.date.tooltip-display="off",
+    value-formats.description.tooltip-display="auto",
+    value-formats.description.series-display="off",
+    animation-on-display='auto',
+    animation-on-data-change='auto',
+    style='width:100%;height:400px'>
+</oj-timeline>
+<div id='treemap-container'>
+  <oj-treemap id="treemap" 
+    animation-on-display="auto"
+    animation-on-data-change="auto"
+    selection-mode = "none"
+    nodes="[[nodeValues]]"
+    style="width:100%; height:400px;">
+  </oj-treemap>
+</div>
