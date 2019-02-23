@@ -4,11 +4,17 @@
  */
 define(['ojs/ojcore', 'knockout', 'jquery',
 'ojs/ojknockout-keyset', 'ojs/ojarraytreedataprovider', 'ojs/ojknockout', 
-  'ojs/ojsunburst'],
+  'ojs/ojsunburst', 'ojs/ojpopup'],
  function(oj, ko, $) {
   
     function FieldsViewModel() {
       var self = this;
+
+      var node = document.querySelector("#sunburst");
+      var busyContext = oj.Context.getContext(node).getBusyContext();
+      busyContext.whenReady().then(function () {
+        document.querySelector('#popup1').open("#currentText");
+      });
 
       var data = ko.observableArray(
         [
@@ -69,8 +75,13 @@ define(['ojs/ojcore', 'knockout', 'jquery',
         ]
       );
         self.sunburstData= new oj.ArrayTreeDataProvider(data, {keyAttributes: 'id', childrenAttribute: "babies"});        
+        self.firstTime = true;
         self.drillListener = function(event) {
           document.getElementById('currentText').innerHTML = event.detail.data['label'];
+          if (self.firstTime){
+            document.querySelector('#popup2').open("#currentText");
+            self.firstTime = false;
+          }
         }
       
       // Below are a set of the ViewModel methods invoked by the oj-module component.

@@ -1,14 +1,28 @@
-
 /*
  * Your dashboard ViewModel code goes here
  */
 define(['ojs/ojcore', 'knockout', 'jquery',
-    'ojs/ojknockout', 'ojs/ojtimeline', 'ojs/ojbutton', 'ojs/ojtreemap'
+    'ojs/ojknockout', 'ojs/ojtimeline', 'ojs/ojbutton', 'ojs/ojtreemap', 'ojs/ojpopup'
   ],
   function (oj, ko, $) {
 
     function DashboardViewModel() {
       var self = this;
+
+      var node = document.querySelector("#tline");
+      var busyContext = oj.Context.getContext(node).getBusyContext();
+      busyContext.whenReady().then(function () {
+        document.querySelector('#popup1').open("#tlineArea");
+      });
+      self.closePopup1 = function(){
+        document.querySelector('#popup2').open("#navigationMenu");
+      }
+      self.closePopup2 = function(){
+        document.querySelector('#popup3').open("#tline");
+      }
+      self.closePopup3 = function(){
+        document.querySelector('#popup4').open("#treemap");
+      }
 
       var items = ko.observableArray();
       self.timelineSeries = ko.computed(function () {
@@ -108,12 +122,12 @@ define(['ojs/ojcore', 'knockout', 'jquery',
         self.timelineSeries()[0].items.forEach(element => {
           //console.log(element)
           if (event.detail.viewportStart < new Date(element.start).toISOString() &&
-              new Date(element.start).toISOString() < event.detail.viewportEnd) {
+            new Date(element.start).toISOString() < event.detail.viewportEnd) {
             if (element.category == "Chemistry") {
               subCat = element.subcategory
               subCat_id = element.subcategory_id
               parent = nodes[0]
-              
+
             } else if (element.category == "Physics") {
               subCat = element.subcategory
               subCat_id = element.subcategory_id
@@ -136,37 +150,6 @@ define(['ojs/ojcore', 'knockout', 'jquery',
           }
         });
       }
-
-
-      // Below are a set of the ViewModel methods invoked by the oj-module component.
-      // Please reference the oj-module jsDoc for additional information.
-
-      /**
-       * Optional ViewModel method invoked after the View is inserted into the
-       * document DOM.  The application can put logic that requires the DOM being
-       * attached here. 
-       * This method might be called multiple times - after the View is created 
-       * and inserted into the DOM and after the View is reconnected 
-       * after being disconnected.
-       */
-      self.connected = function () {
-        // Implement if needed
-      };
-
-      /**
-       * Optional ViewModel method invoked after the View is disconnected from the DOM.
-       */
-      self.disconnected = function () {
-        // Implement if needed
-      };
-
-      /**
-       * Optional ViewModel method invoked after transition to the new View is complete.
-       * That includes any possible animation between the old and the new View.
-       */
-      self.transitionCompleted = function () {
-        // Implement if needed
-      };
     }
 
     /*
