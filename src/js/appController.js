@@ -45,7 +45,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojmodule-el
       // Navigation setup
       var navData = [
       {name: 'Dashboard', id: 'dashboard',
-       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'}
+       iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'},
+       {name: 'Fields', id: 'fields',
+        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-fire-icon-24'},
+       {name: 'Scientists', id: 'scientists',
+        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-people-icon-24'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
 
